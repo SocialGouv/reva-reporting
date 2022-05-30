@@ -2,7 +2,7 @@ import pandas as pd
 from structlog import get_logger
 
 from jobs.utils.monitoring import job_logging
-from jobs.infra.postgresql_connector import ProdPostgreSQLConnector, DWHPostgreSQLConnector
+from jobs.infra.postgresql_connector import PostgreSQLConnector
 
 logging = get_logger()
 
@@ -15,7 +15,7 @@ def expose_candidacy() -> int:
 
 
 def read_candidacy() -> pd.DataFrame:
-    pg_connector = ProdPostgreSQLConnector()
+    pg_connector = PostgreSQLConnector.create_prod_connector()
     candidacy = pd.read_sql_query(
         sql='''
             SELECT id,
@@ -36,7 +36,7 @@ def read_candidacy() -> pd.DataFrame:
 
 
 def write_candidacy_to_postgres(candidacy: pd.DataFrame) -> int:
-    pg_connector = DWHPostgreSQLConnector()
+    pg_connector = PostgreSQLConnector.create_dwh_connector()
     pg_connector.replace_table_data('candidacy', candidacy)
     logging.info(f'{candidacy.shape[0]} candidacy records written to reva-datawarehouse')
     return candidacy.shape[0]

@@ -1,5 +1,6 @@
+from __future__ import annotations
+
 import os
-from abc import ABC
 
 import pandas as pd
 from dotenv import load_dotenv
@@ -13,7 +14,7 @@ load_dotenv()
 logging = get_logger()
 
 
-class PostgreSQLConnector(ABC):
+class PostgreSQLConnector:
     def __init__(self, db=None, host=None, port=None, user=None, password=None):
         self.db = db
         self.host = host
@@ -39,22 +40,22 @@ class PostgreSQLConnector(ABC):
         connection = connector.connect()
         return connection
 
-
-class ProdPostgreSQLConnector(PostgreSQLConnector):
-    def __init__(self):
+    @classmethod
+    def create_prod_connector(cls) -> PostgreSQLConnector:
         db = os.getenv('PGDATABASE_PROD')
         host = os.getenv('PGHOST_PROD')
         port = os.getenv('PGPORT_PROD')
         user = os.getenv('PGUSER_PROD')
         password = os.getenv('PGPASSWORD_PROD')
-        super().__init__(db, host, port, user, password)
 
+        return cls(db, host, port, user, password)
 
-class DWHPostgreSQLConnector(PostgreSQLConnector):
-    def __init__(self):
+    @classmethod
+    def create_dwh_connector(cls) -> PostgreSQLConnector:
         db = os.getenv('PGDATABASE_DWH')
         host = os.getenv('PGHOST_DWH')
         port = os.getenv('PGPORT_DWH')
         user = os.getenv('PGUSER_DWH')
         password = os.getenv('PGPASSWORD_DWH')
-        super().__init__(db, host, port, user, password)
+
+        return cls(db, host, port, user, password)

@@ -16,10 +16,10 @@ def job_logging(func):
                                                                   'executionTimeInSeconds': time.time() - start_time,
                                                                   'numberOfRecords': nb_of_records})
             return nb_of_records
-        except Exception as error:
+        except Exception:
             logging.error('Failure', message='Job report', report={'jobName': func.__name__,
                                                                    'success': False,
                                                                    'executionTimeInSeconds': time.time() - start_time})
-            raise error
+            raise
 
     return wrapper
