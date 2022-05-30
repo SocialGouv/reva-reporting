@@ -6,18 +6,6 @@ Base = declarative_base()
 metadata = Base.metadata
 
 
-class Goal(Base):
-    __tablename__ = 'goal'
-
-    id = Column(VARCHAR(255), primary_key=True)
-    label = Column(VARCHAR(255))
-    is_active = Column(BOOLEAN)
-    created_at = Column(TIMESTAMP(timezone=True))
-    updated_at = Column(TIMESTAMP(timezone=True))
-    needs_additional_information = Column(BOOLEAN)
-    order = Column(INTEGER)
-
-
 class Candidacy(Base):
     __tablename__ = 'candidacy'
 
@@ -30,3 +18,15 @@ class Candidacy(Base):
     certification_id = Column(VARCHAR(255))
     email = Column(VARCHAR(255))
     phone = Column(VARCHAR(255))
+
+
+class Goal(Base):
+    __tablename__ = 'goal'
+
+    id = Column(VARCHAR(255), primary_key=True)
+    label = Column(VARCHAR(255))
+    is_active = Column(BOOLEAN)
+    created_at = Column(TIMESTAMP(timezone=True))
+    updated_at = Column(TIMESTAMP(timezone=True))
+    needs_additional_information = Column(BOOLEAN)
+    order = Column(INTEGER)
