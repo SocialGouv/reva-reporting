@@ -14,7 +14,7 @@ setup(
                       'psycopg2==2.9.2',
                       'python-dateutil==2.8.2',
                       'python-dotenv==0.19.1',
-                      'requests==2.27.1',
+                      'requests==2.31.0',
                       'sqlalchemy==1.4.36',
                       'structlog==21.5.0',
                       'Unidecode==1.3.4'],
